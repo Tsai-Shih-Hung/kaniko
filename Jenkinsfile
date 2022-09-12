@@ -79,7 +79,7 @@ pipeline {
         container(name: 'owasp-zap') {
 
           script{
-            echo "${props["tfsec.version"]}"
+            echo "${props["test-config"]}"
           }
         }
         }
