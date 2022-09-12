@@ -1,5 +1,3 @@
-
-
 podTemplate {
   node(POD_LABEL) {
     checkout scm
@@ -29,7 +27,7 @@ pipeline {
           mountPath: /logs
             
       - name: filebeat
-        image: docker.elastic.co/beats/filebeat:8.2.3
+        image: docker.elastic.co/beats/${props["version"]}
         imagePullPolicy: Always
         args: [
             "-c", "/opt/filebeat/filebeat.yml",
@@ -79,9 +77,10 @@ pipeline {
     stage('Test zap') {
       steps {
         container(name: 'owasp-zap') {
-           sh '''
-            i am in container 
-          '''
+
+          script{
+            echo "${props["tfsec.version"]}"
+          }
         }
         }
     }
